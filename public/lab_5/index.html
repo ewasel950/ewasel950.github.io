@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Eman Wasel's Lab 4</title>
+    <link href="styles.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <div class="container">
+    
+     </div class="wrapper">
+
+     <h1>Eman Wasel's Lab 4</h1>
+      <form action="/api" method="post">
+        <ul class="flex-outer">
+          <li>
+            <label for="fname">First Name</label>
+            <input type="text" id="fname" name="fname" maxlength="140">
+          </li>
+          <li>
+            <label for="lname">Last Name</label>
+            <input type="text" id="lname"name="lname" maxlength="140">
+          </li>
+          <li>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email">
+          </li>
+          <li>
+            <label for="phone">Phone</label>
+            <input type="tel" id="phone" name="phone">
+          </li>
+          <li>
+            <label for="message">Text field</label>
+            <textarea rows="5" cols="33" id="message" name="message"></textarea>
+          </li>
+          <li>
+            <p class= "checkbox-list-label">Age</p>   
+            <ul class="flex-inner">
+              <li>
+                <label for="age_1">18-35</label> 
+                <input type="checkbox" id="age_1" name="age_1" >
+               
+              </li>
+              <li>
+                <label for="age_2">35-50</label>
+                <input type="checkbox" id="age_2" name="age_2" >
+                
+              </li>
+              <li>
+                <label for="age_3">50-65</label>
+                <input type="checkbox" id="age_3" name="age_3">
+                
+              </li>
+            </ul>
+          </li>
+          <li>
+            <button type="submit" id="SUBMIT" name="submit">SUBMIT FORM</button>
+            <button type="button" id="button1"  name="ButtonName" onclick="testFunction()"> Activate</button>
+          </li>
+        </ul>
+      </form> 
+     </div>
+    </div>
+    <script>
+
+      function testFunction() {
+
+        fetch('/api')
+                .then((response) => response.text())
+                .then((response) => {
+                    console.log(response);
+                    document.querySelector("h1").innerText = response;
+                    document.querySelector("title").innerText = response;
+                    document.querySelector("body").style.backgroundColor = "#DEB887";
+                    document.querySelector(".checkbox-list-label").innerText = "Fruits";
+                    
+                    const fruits = ["Orange", "Mango", "Banana"];
+
+                    const labels = document.querySelectorAll('.flex-inner label')
+                    console.log(labels.length, labels[0]);
+
+                    labels.forEach(((label, i) => {
+                        console.log(label,i);
+                        label.innerText = fruits[i];
+                    }))
+                    
+                   
+                }); 
+               const margin = document.querySelector(".flex-outer").style.margin = "0 auto";
+      }
+  
+    </script>
+  </body>
+  </html>
