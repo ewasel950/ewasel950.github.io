@@ -18,6 +18,7 @@ function sortFunction(a, b, key) {
 }
 
 document.body.addEventListener('submit', async (e) => {
+
   e.preventDefault(); // this stops whatever the browser wanted to do itself.
   const form = $(e.target).serializeArray(); // here we're using jQuery to serialize the form
   fetch('/api', {
@@ -30,7 +31,35 @@ document.body.addEventListener('submit', async (e) => {
     .then((fromServer) => fromServer.json())
     .then((fromServer) => {
       // You're going to do your lab work in here. Replace this comment.
+
       console.log('fromServer', fromServer);
+      //clear the form available first.. 
+      if(document.querySelector(".flex-inner")){
+        document.querySelector(".flex-inner").remove();
+      }
+
+      //Get ten random countries and mapping them... 
+      const arr = range(10);
+      const arrCountries = arr.map(() => {
+        const num = getRandomIntInclusive(0, 243);
+        return fromServer[num];
+      });
+        
+      const sortRevList = arrCountries.sort((a, b) => sortByKey(org, compare, "name"));
+      
+      const ol = document.createElement("ol");
+      ol.className = "flex-inner";
+      $("form").prepend(ol);
+
+      // now append the list elements
+      sortRevList.forEach((el, i) => {
+        const newList = document.createElement("li");
+        $(newList).append(`<input type = "checkbox" value = ${el.code} id = ${el.code} />`);
+        $(newList).append(`<label for = ${elmt.code} > ${elmt.name} </label>`);
+
+        $(ol).append(newList);
+      });
+   
     })
     .catch((err) => console.log(err));
-});
+  });
