@@ -41,11 +41,13 @@ document.body.addEventListener('submit', async (e) => {
       //Get ten random countries and mapping them... 
       const arr = range(10);
       const arrCountries = arr.map(() => {
-        const num = getRandomIntInclusive(0, 243);
+        const num = Math.floor(Math.random() * 243);
+        //getRandomIntInclusive(0, 243);
         return fromServer[num];
       });
         
-      const sortRevList = arrCountries.sort((a, b) => sortByKey(org, compare, "name"));
+      const sortRevList = arrCountries.sort((a, b) => sortFunction(b, a, "name"));
+      /*sortByKey(org, compare, "name"));*/
       
       const ol = document.createElement("ol");
       ol.className = "flex-inner";
@@ -55,7 +57,7 @@ document.body.addEventListener('submit', async (e) => {
       sortRevList.forEach((el, i) => {
         const newList = document.createElement("li");
         $(newList).append(`<input type = "checkbox" value = ${el.code} id = ${el.code} />`);
-        $(newList).append(`<label for = ${elmt.code} > ${elmt.name} </label>`);
+        $(newList).append(`<label for = ${el.code} > ${el.name} </label>`);
 
         $(ol).append(newList);
       });
